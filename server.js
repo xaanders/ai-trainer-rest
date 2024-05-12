@@ -47,6 +47,7 @@ app.post('/api/workout-generate', async (req, res) => {
 
         if (!planId)
             return res.status(403).send({ message: "Plan id doesn't exist" });
+
         // find a plan
         const { data: planData, error: planError } = await supabase.from('workout_plans')
             .select(`*,
@@ -81,7 +82,7 @@ app.post('/api/workout-generate', async (req, res) => {
          * Function calling is currently only supported with ChatOpenAI models
          */
         const model = new ChatOpenAI({
-            temperature: 0.5,
+            temperature: 0.4,
             modelName: "gpt-3.5-turbo-1106",
         });
 
@@ -127,6 +128,7 @@ app.post('/api/workout-generate', async (req, res) => {
         /**
          * Returns a chain with the function calling model.
          */
+
         const chain = prompt
             .pipe(functionCallingModel)
             .pipe(new JsonOutputFunctionsParser());
@@ -160,6 +162,7 @@ app.post('/api/workout-generate', async (req, res) => {
         currentPlan.workout_weeks.push(newPlan)
         delete newPlan.user_id
         delete newPlan.plan_id
+
         console.log('currentPlan', currentPlan.workout_weeks.length)
         // await addUserActivity('Created a workout week', session.user.id)
 
@@ -169,7 +172,6 @@ app.post('/api/workout-generate', async (req, res) => {
         console.log(err.message)
         return res.status(500).send({ message: err.message });
     }
-    // res.send({error, data})
 })
 
 

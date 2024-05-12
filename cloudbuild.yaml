@@ -1,7 +1,7 @@
  steps:
   # Build the container image
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['build', '-t', 'gcr.io/$PROJECT_ID/SERVICE-NAME:$COMMIT_SHA', '.']
+    args: ['build', '-t', 'gcr.io/$PROJECT_ID/ai-trainer-rest:$COMMIT_SHA', '.']
   # Push the container image to Container Registry
   - name: 'gcr.io/cloud-builders/docker'
     args: ['push', 'gcr.io/$PROJECT_ID/ai-trainer-rest:$COMMIT_SHA']
@@ -11,10 +11,10 @@
     args:
     - 'run'
     - 'deploy'
-    - 'SERVICE-NAME'
+    - 'ai-trainer-rest'
     - '--image'
-    - 'gcr.io/$PROJECT_ID/SERVICE-NAME:$COMMIT_SHA'
+    - 'gcr.io/$PROJECT_ID/ai-trainer-rest:$COMMIT_SHA'
     - '--region'
-    - 'us-east4'
+    - 'REGION'
   images:
-  - 'gcr.io/$PROJECT_ID/SERVICE-NAME:$COMMIT_SHA'
+  - 'gcr.io/$PROJECT_ID/ai-trainer-rest:$COMMIT_SHA'
