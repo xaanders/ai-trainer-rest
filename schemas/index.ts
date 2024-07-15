@@ -1,5 +1,4 @@
 import { strengthSchemas } from "./strength";
-
 const getSchema = (goal: string) => {
     switch (goal.toLowerCase()) {
         case 'strength':
@@ -12,3 +11,5 @@ const getSchema = (goal: string) => {
             throw new Error('Unknown goal');
     }
 };
+
+export default getSchema

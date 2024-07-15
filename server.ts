@@ -1,6 +1,6 @@
 import express, { Express } from "express";
 import cors from 'cors'
-import router from "./router/routes";
+import router from "./startup/router";
 import dotenv from 'dotenv'
 import { authMiddleware } from "./startup/middleware";
 
@@ -14,7 +14,8 @@ app.use(cors());
 app.use(express.json())
 
 authMiddleware(app)
-router(app);
+
+app.use(router)
 
 app.listen(port, () => {
     console.log(`Started server on port ${port}`);
